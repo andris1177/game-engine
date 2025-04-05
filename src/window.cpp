@@ -8,7 +8,11 @@ Engine::Window::Window(int w, int h, std::string name)
 
 void Engine::Window::initWindow()
 {
-    glfwInit();
+    if (!glfwInit())
+    {
+        std::cout << "Cant initialize glfw\n";
+    }
+
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
     window = glfwCreateWindow(windowWidth, windowHeight, windowName.c_str(), nullptr, nullptr);

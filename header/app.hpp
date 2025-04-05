@@ -11,8 +11,8 @@ namespace Engine
         
 
     private:
-        int windowHeight;
-        int windowWidth;
+        const int windowHeight;
+        const int windowWidth;
         std::string windowName;
         Window window;
     };

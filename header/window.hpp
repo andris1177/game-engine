@@ -13,12 +13,12 @@ namespace Engine
         Window(int w, int h, std::string name);
         ~Window();
         bool closeWindow() const;
+        GLFWwindow *window;
 
     private:
         int windowWidth;
         int windowHeight;
         std::string windowName;
         void initWindow();
-        GLFWwindow *window;
     };
 }

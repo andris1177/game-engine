@@ -1,5 +1,6 @@
 #pragma once
 #include "window.hpp"
+#include "vulkan.hpp"
 
 namespace Engine
 {
@@ -7,13 +8,15 @@ namespace Engine
     {
     public:
         App();
+        ~App();
         void run();
         
 
     private:
         const int windowHeight;
         const int windowWidth;
-        std::string windowName;
-        Window window;
+        const std::string windowName;
+        Window* window;
+        Vulkan* vulkan;
     };
 }

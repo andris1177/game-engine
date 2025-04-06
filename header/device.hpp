@@ -10,36 +10,16 @@
 #include <limits> 
 #include <algorithm> 
 
+#include "definitions.hpp"
+
 namespace Engine
 {
     class Device
     {
-    private:
-        struct QueueFamilyIndices
-        {
-            std::optional<uint32_t> graphicsFamily;
-            std::optional<uint32_t> presentFamily;
-
-            bool isComplete() 
-            {
-                return graphicsFamily.has_value() && presentFamily.has_value();
-            }
-        };
-
-        const std::vector<const char*> deviceExtensions = {
-            VK_KHR_SWAPCHAIN_EXTENSION_NAME
-        };
-
-        struct SwapChainSupportDetails 
-        {
-            VkSurfaceCapabilitiesKHR capabilities;
-            std::vector<VkSurfaceFormatKHR> formats;
-            std::vector<VkPresentModeKHR> presentModes;
-        };
-
     public:
         Device(VkInstance* i, VkSurfaceKHR* s, GLFWwindow* w);
         ~Device();
+        QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
         void pickPhysicalDevice();
         void createLogicalDevice();
         void createSwapChain();
@@ -48,11 +28,17 @@ namespace Engine
     public:
         VkDevice device;
         VkFormat swapChainImageFormat;
+        std::vector<VkImageView> swapChainImageViews;
+        VkExtent2D swapChainExtent;
+        VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+        QueueFamilyIndices indices;
+        VkSwapchainKHR swapChain;
+        VkQueue graphicsQueue;
+        VkQueue presentQueue;
         
 
     private:
         bool isDeviceSuitable(VkPhysicalDevice device);
-        QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
         bool checkDeviceExtensionSupport(VkPhysicalDevice device);
         SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
         VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
@@ -63,16 +49,9 @@ namespace Engine
         VkInstance* instance;
         VkSurfaceKHR* surface;
         GLFWwindow* window;
-        VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-        QueueFamilyIndices indices;
-        VkQueue graphicsQueue;
-        VkQueue presentQueue;
         SwapChainSupportDetails details;
         uint32_t formatCount;
         uint32_t presentModeCount;
-        VkSwapchainKHR swapChain;
         std::vector<VkImage> swapChainImages;
-        VkExtent2D swapChainExtent;
-        std::vector<VkImageView> swapChainImageViews;
     };
 }

@@ -8,6 +8,7 @@
 #include "device.hpp"
 #include "windowSurface.hpp"
 #include "graphicsPipeline.hpp"
+#include "commandbuffer.hpp"
 
 namespace Engine
 {
@@ -16,16 +17,24 @@ namespace Engine
     public:
         Vulkan(GLFWwindow* w);
         ~Vulkan();
+        void drawFrame();
+
+    public:
+        Device* device;
 
     private:
         void createInstance();
         void listExxesions() const;
+        void createSyncObjects();
 
     private:
+        GLFWwindow* window; 
         VkInstance instance;
-        Device* device;
         WindowSurface* windowsurface;
-        GLFWwindow* window;
         GraphicsPipeline* graphicspipeline;
+        CommandBuffer* commandbuffer;
+        VkSemaphore imageAvailableSemaphore;
+        VkSemaphore renderFinishedSemaphore;
+        VkFence inFlightFence;
     };
 }

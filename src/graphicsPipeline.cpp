@@ -1,7 +1,7 @@
 #include "../header/graphicsPipeline.hpp"
 
-Engine::GraphicsPipeline::GraphicsPipeline(VkDevice* d, VkFormat* s)
-    : device(d), swapChainImageFormat(s)
+Engine::GraphicsPipeline::GraphicsPipeline(VkDevice* d, VkFormat* s, std::vector<VkImageView>* v, VkExtent2D* e)
+    : device(d), swapChainImageFormat(s), swapChainImageViews(v), swapChainExtent(e)
 {
     
 }
@@ -193,12 +193,22 @@ void Engine::GraphicsPipeline::createRenderPass()
     subpass.colorAttachmentCount = 1;
     subpass.pColorAttachments = &colorAttachmentRef;
 
+    VkSubpassDependency dependency{};
+    dependency.srcSubpass = VK_SUBPASS_EXTERNAL;
+    dependency.dstSubpass = 0;
+    dependency.srcStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+    dependency.srcAccessMask = 0;
+    dependency.dstStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+    dependency.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+
     VkRenderPassCreateInfo renderPassInfo{};
     renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
     renderPassInfo.attachmentCount = 1;
     renderPassInfo.pAttachments = &colorAttachment;
     renderPassInfo.subpassCount = 1;
     renderPassInfo.pSubpasses = &subpass;
+    renderPassInfo.dependencyCount = 1;
+    renderPassInfo.pDependencies = &dependency;
 
     if (vkCreateRenderPass(*(device), &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS) 
     {
@@ -206,8 +216,37 @@ void Engine::GraphicsPipeline::createRenderPass()
     }
 }
 
+void Engine::GraphicsPipeline::createFramebuffers()
+{
+    swapChainFramebuffers.resize(swapChainImageViews->size());
+
+    for (size_t i = 0; i < swapChainImageViews->size(); i++) 
+    {
+        VkImageView attachments[] = {
+            (*swapChainImageViews)[i]
+        };
+    
+        VkFramebufferCreateInfo framebufferInfo{};
+        framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+        framebufferInfo.renderPass = renderPass;
+        framebufferInfo.attachmentCount = 1;
+        framebufferInfo.pAttachments = attachments;
+        framebufferInfo.width = swapChainExtent->width;
+        framebufferInfo.height = swapChainExtent->height;
+        framebufferInfo.layers = 1;
+    
+        if (vkCreateFramebuffer(*(device), &framebufferInfo, nullptr, &swapChainFramebuffers[i]) != VK_SUCCESS) {
+            throw std::runtime_error("failed to create framebuffer!");
+        }
+    }
+}
+
 Engine::GraphicsPipeline::~GraphicsPipeline()
 {
+    for (auto framebuffer : swapChainFramebuffers) 
+    {
+        vkDestroyFramebuffer(*(device), framebuffer, nullptr);
+    }
     vkDestroyPipelineLayout(*(device), pipelineLayout, nullptr);
     vkDestroyRenderPass(*(device), renderPass, nullptr);
     vkDestroyPipeline(*(device), graphicsPipeline, nullptr);

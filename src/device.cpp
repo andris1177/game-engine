@@ -67,7 +67,7 @@ bool Engine::Device::checkDeviceExtensionSupport(VkPhysicalDevice device)
     return requiredExtensions.empty();
 }
 
-Engine::Device::QueueFamilyIndices Engine::Device::findQueueFamilies(VkPhysicalDevice device)
+QueueFamilyIndices Engine::Device::findQueueFamilies(VkPhysicalDevice device)
 {
     uint32_t queueFamilyCount = 0;
     vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
@@ -215,7 +215,7 @@ void Engine::Device::createSwapChain()
     swapChainExtent = extent;
 }
 
-Engine::Device::SwapChainSupportDetails Engine::Device::querySwapChainSupport(VkPhysicalDevice device) 
+SwapChainSupportDetails Engine::Device::querySwapChainSupport(VkPhysicalDevice device) 
 {
     vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, *(surface), &details.capabilities);
 

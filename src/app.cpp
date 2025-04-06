@@ -10,7 +10,10 @@ void Engine::App::run()
     while (!window->closeWindow())
     {
         glfwPollEvents();
+        vulkan->drawFrame();
     }
+
+    vkDeviceWaitIdle(vulkan->device->device);
 }
 
 Engine::App::~App()

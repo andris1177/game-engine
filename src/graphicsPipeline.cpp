@@ -250,5 +250,5 @@ Engine::GraphicsPipeline::~GraphicsPipeline()
     vkDestroyPipelineLayout(*(device), pipelineLayout, nullptr);
     vkDestroyRenderPass(*(device), renderPass, nullptr);
     vkDestroyPipeline(*(device), graphicsPipeline, nullptr);
-    vkDestroyPipelineLayout(*(device), pipelineLayout, nullptr);
+    //vkDestroyPipelineLayout(*(device), pipelineLayout, nullptr);
 }

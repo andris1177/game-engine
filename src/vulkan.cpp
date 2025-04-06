@@ -143,9 +143,9 @@ Engine::Vulkan::~Vulkan()
     vkDestroySemaphore(device->device, imageAvailableSemaphore, nullptr);
     vkDestroySemaphore(device->device, renderFinishedSemaphore, nullptr);
     vkDestroyFence(device->device, inFlightFence, nullptr);
+    delete commandbuffer;
+    delete graphicspipeline;
     delete device;
     delete windowsurface;
-    delete graphicspipeline;
-    delete commandbuffer;
     vkDestroyInstance(instance, nullptr);
 }

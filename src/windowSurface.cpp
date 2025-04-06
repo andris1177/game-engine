@@ -17,5 +17,4 @@ void Engine::WindowSurface::createSurface()
 Engine::WindowSurface::~WindowSurface()
 {
     vkDestroySurfaceKHR(*(instance), surface, nullptr);
-    vkDestroyInstance(*(instance), nullptr);
 }

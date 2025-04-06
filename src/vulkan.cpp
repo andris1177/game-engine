@@ -7,9 +7,15 @@ Engine::Vulkan::Vulkan(GLFWwindow* w)
     listExxesions();
     windowsurface = new WindowSurface(&instance, window);
     windowsurface->createSurface();
-    device = new Device(&instance, &windowsurface->surface);
+    device = new Device(&instance, &windowsurface->surface, window);
     device->pickPhysicalDevice();
     device->createLogicalDevice();
+    device->createSwapChain();
+    device->createImageViews();
+    graphicspipeline = new GraphicsPipeline(&device->device, &device->swapChainImageFormat);
+    graphicspipeline->createRenderPass();
+    graphicspipeline->createGraphicsPipeline();
+
 }
 
 void Engine::Vulkan::createInstance()
@@ -67,5 +73,7 @@ void Engine::Vulkan::listExxesions() const
 Engine::Vulkan::~Vulkan()
 {
     delete device;
+    delete windowsurface;
+    delete graphicspipeline;
     vkDestroyInstance(instance, nullptr);
 }

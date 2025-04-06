@@ -7,6 +7,7 @@
 
 #include "device.hpp"
 #include "windowSurface.hpp"
+#include "graphicsPipeline.hpp"
 
 namespace Engine
 {
@@ -25,5 +26,6 @@ namespace Engine
         Device* device;
         WindowSurface* windowsurface;
         GLFWwindow* window;
+        GraphicsPipeline* graphicspipeline;
     };
 }

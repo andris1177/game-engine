@@ -1,7 +1,7 @@
 #include "../header/app.hpp"
 
 Engine::App::App()
-    : windowWidth(1024), windowHeight(668), windowName("teszt"), window(new Window(windowWidth, windowHeight, windowName)), vulkan(new Vulkan(window->window))
+    : windowWidth(1920), windowHeight(1080), windowName("teszt"), window(new Window(windowWidth, windowHeight, windowName)), vulkan(new Vulkan(window->window))
 {
 }
 

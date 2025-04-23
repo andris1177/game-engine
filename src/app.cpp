@@ -18,6 +18,6 @@ void Engine::App::run()
 
 Engine::App::~App()
 {
-    delete window;
     delete vulkan;
+    delete window;
 }

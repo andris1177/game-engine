@@ -1,15 +1,15 @@
-cmake_minimum_required(VERSION 3.30)
-project(engine LANGUAGES CXX)
-find_package(Vulkan REQUIRED)
+cmake_minimum_required(VERSION 3.10)
+project(game-engine VERSION 0.1)
+project(LANGUAGE CXX)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+find_package(Vulkan REQUIRED)
 add_subdirectory(external/glfw)
 
-file(GLOB CPP_SOURCES_1 "src/*.cpp")
-add_executable(engine ${CPP_SOURCES_1} main.cpp)
-target_include_directories(engine PRIVATE "header")
-target_link_libraries(engine PRIVATE Vulkan::Vulkan glfw )
+file(GLOB_RECURSE src CONFIGURE_DEPENDS "src/*.cpp")
 
-#target_compile_options(engine PRIVATE -fsanitize=address -g)
-#target_link_options(engine PRIVATE -fsanitize=address)
+add_executable(engine ${src} main.cpp)
 
-set(CMAKE_BUILD_TYPE Debug)
+target_link_libraries(engine PUBLIC glfw Vulkan::Vulkan)

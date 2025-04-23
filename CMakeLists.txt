@@ -4,6 +4,7 @@ project(LANGUAGE CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_BUILD_TYPE Debug)
 
 find_package(Vulkan REQUIRED)
 add_subdirectory(external/glfw)

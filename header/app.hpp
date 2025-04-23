@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../header/graphics/vulkan/vulkanWindow.hpp"
 
 namespace Engine
 {
@@ -12,6 +13,5 @@ namespace Engine
         
 
     private:
-        
     };
 }

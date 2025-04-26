@@ -1,26 +1,38 @@
 #include "../../header/graphics/window.hpp"
 
-Engine::Graphics::Window::Window(int windowWidth, int windowHeight, const char* windowName)
-    : m_windowWidth(windowWidth), m_windowHeight(windowHeight), m_windowName(windowName)
+namespace Engine
 {
-    if (!glfwInit())
+    namespace Graphics
     {
-        std::cout << "Cant initialize glfw\n";
+        Window::Window(int windowWidth, int windowHeight, const char* windowName)
+            : m_windowWidth(windowWidth), m_windowHeight(windowHeight), m_windowName(windowName)
+        {
+            if (!glfwInit())
+            {
+                std::cout << "Cant initialize glfw\n";
+            }
+        }
+
+        bool Window::shouldClose()
+        {
+            return glfwWindowShouldClose(m_window);
+        }
+
+        void Window::poolEvents()
+        {
+            glfwPollEvents();
+        }
+
+        GLFWwindow* Window::getWindow()
+        {
+            return m_window;
+        }
+
+        Window::~Window()
+        {
+            glfwDestroyWindow(m_window);
+            glfwTerminate();
+        }
     }
 }
 
-bool Engine::Graphics::Window::shouldClose()
-{
-    return glfwWindowShouldClose(window);
-}
-
-void Engine::Graphics::Window::poolEvents()
-{
-    glfwPollEvents();
-}
-
-Engine::Graphics::Window::~Window()
-{
-    glfwDestroyWindow(window);
-    glfwTerminate();
-}

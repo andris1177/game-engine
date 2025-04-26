@@ -1,15 +1,13 @@
 #include "../header/app.hpp"
 
 Engine::App::App()
+    : m_renderer(Graphics::VulkanRenderer(1920, 1080, "Engine"))
 {
-    Graphics::VulkanWindow window(1920, 1080, "teszt");
-    window.init();
-    window.initWindow();
 }
 
 void Engine::App::run()
 {
-    
+    m_renderer.init();
 }
 
 Engine::App::~App()

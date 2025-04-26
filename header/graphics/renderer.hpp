@@ -7,7 +7,14 @@ namespace Engine
         class Renderer
         {
         public:
-            void init();
+            Renderer(int windowHeight, int windowWidth, const char* windowName)
+            : m_WindowWidth(windowWidth), m_WindowHeight(windowHeight), m_windowName(windowName){};
+            virtual void init() = 0;
+
+        protected:
+            int m_WindowWidth;
+            int m_WindowHeight;
+            const char* m_windowName;
         };
     }
 }

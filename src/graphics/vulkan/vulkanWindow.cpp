@@ -8,6 +8,6 @@ void Engine::Graphics::VulkanWindow::init()
 
 void Engine::Graphics::VulkanWindow::initWindow()
 {
-    window = glfwCreateWindow(m_windowWidth, m_windowHeight, m_windowName, nullptr, nullptr);
+    m_window = glfwCreateWindow(m_windowWidth, m_windowHeight, m_windowName, nullptr, nullptr);
     std::cout << "vulkan window has been created" << std::endl;
 }

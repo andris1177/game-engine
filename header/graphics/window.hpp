@@ -16,12 +16,13 @@ namespace Engine
             virtual void initWindow() = 0;
             bool shouldClose();
             void poolEvents();
+            GLFWwindow* getWindow();
 
         protected:
             int m_windowWidth;
             int m_windowHeight;
             const char* m_windowName;
-            GLFWwindow* window;
+            GLFWwindow* m_window;
         };
     }
 }

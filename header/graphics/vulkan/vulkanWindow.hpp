@@ -8,11 +8,11 @@ namespace Engine
 {
     namespace Graphics 
     {
-        class VulkanWindow : private Window
+        class VulkanWindow : public Window
         {
+            using Window::Window;
+
         public:
-            VulkanWindow(int width, int height, const char* name)
-                : Window(width, height, name) {}
             void init() override;
             void initWindow() override; 
         };

@@ -9,6 +9,6 @@ void Engine::Graphics::OpenglWindow::init()
 
 void Engine::Graphics::OpenglWindow::initWindow()
 {
-    window = glfwCreateWindow(m_windowWidth, m_windowHeight, m_windowName, nullptr, nullptr);
+    m_window = glfwCreateWindow(m_windowWidth, m_windowHeight, m_windowName, nullptr, nullptr);
     std::cout << "opengl window has been created" << std::endl;
 }

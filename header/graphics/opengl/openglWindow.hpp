@@ -8,11 +8,11 @@ namespace Engine
 {
     namespace Graphics 
     {
-        class OpenglWindow : private Window
+        class OpenglWindow : public Window
         {
+            using Window::Window;
+
         public:
-            OpenglWindow(int width, int height, const char* name)
-                : Window(width, height, name) {}
             void init() override;
             void initWindow() override; 
         };
